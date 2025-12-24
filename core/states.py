@@ -1,0 +1,16 @@
+# core/states.py
+class State:
+    def __init__(self, game):
+        self.game = game
+
+    def handle_events(self, events):
+        pass
+
+    def update(self, dt):
+        pass
+
+    def draw(self, screen):
+        pass
+
+    def reset(self, **kwargs):
+        pass
