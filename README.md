@@ -278,30 +278,7 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 - ✅ Telas de menu, game over e vitória
 - ✅ HUD funcional
 
-### 7.2 Funcionalidades Futuras (Roadmap)
 
-#### Versão 1.1 (Curto Prazo)
-- [ ] Sistema de som (música e SFX)
-- [ ] Parallax no background
-- [ ] Partículas ao golpear inimigos
-- [ ] Animação de transição entre fases
-- [ ] Boss diferenciado na Fase 3
-
-#### Versão 1.2 (Médio Prazo)
-- [ ] Sistema de checkpoints
-- [ ] Power-ups (vida extra, escudo temporário)
-- [ ] 2 fases extras (total de 5)
-- [ ] Ranking de tempo/score
-- [ ] Conquistas/achievements
-
-#### Versão 2.0 (Longo Prazo)
-- [ ] Modo difícil (mais inimigos, menos HP)
-- [ ] Segundo tipo de inimigo (arqueiro ninja)
-- [ ] Sistema de combo (dano aumentado)
-- [ ] Cutscenes entre fases
-- [ ] Boss final épico
-
----
 
 ## 8. DIFERENCIAL COMPETITIVO
 
@@ -329,7 +306,7 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 
 ## 10. EQUIPE E CRÉDITOS
 
-**Game Designer & Programador**: [Seu Nome]  
+**Game Designer & Programador**: Moises
 **Artista de Sprites**: [Fonte dos assets ou "Stock Assets"]  
 **Engine**: Pygame (Python)  
 **Inspirações**: Hollow Knight, Dead Cells, Shovel Knight, Mark of the Ninja
@@ -338,9 +315,9 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 
 ## 11. CONTATO E LINKS
 
-- **GitHub**: [seu-repositório]
-- **Itch.io**: [link-quando-publicar]
-- **Email**: [seu-email]
+- **GitHub**: [teste]
+- **Itch.io**: [testes]
+- **Email**: [teste]
 
 ---
 
@@ -356,11 +333,10 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 - **26/12/2025**: Criação do documento inicial
 - Sistema de vidas persistentes implementado
 - Telas atualizadas com novo tema
-- 3 fases jogáveis completas
+- 6 fases jogáveis completas
 
 ### Próximos Passos
 1. Adicionar sistema de som
-2. Implementar boss diferenciado
-3. Adicionar partículas e polish visual
-4. Testes de balanceamento
-5. Preparar para publicação
+2. Adicionar partículas e polish visual
+3. Testes de balanceamento
+4. Preparar para publicação
