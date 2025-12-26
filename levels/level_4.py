@@ -7,7 +7,7 @@ class Level4(BaseLevel):
     def __init__(self):
         super().__init__()
         
-        self.load_background("assets/images/backgrounds/bg_level1.png")
+        self.load_background("assets/images/backgrounds/bg_level4.png")
         
         # Escada GRADUAL e ALCANÇÁVEL - cada degrau tem apenas 2 tiles de altura
         layout = [
