@@ -4,6 +4,7 @@
 **Versão**: 1.0  
 **Data**: 26 de dezembro de 2025  
 **Status**: Beta - Funcional, aguardando ajustes finais
+
 **Desenvolvedores**: 
 
 ---
