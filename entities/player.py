@@ -3,8 +3,9 @@ import pygame
 from settings import GRAVIDADE, FORCA_PULO, VEL_PLAYER, LARGURA, ALTURA
 from core.animation import Animation
 
+
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, hp_inicial=5):  # ← RECEBE HP INICIAL
         super().__init__()
         
         PLAYER_SCALE = 0.1
@@ -41,19 +42,20 @@ class Player(pygame.sprite.Sprite):
         self.attack_duration = 0.5
         
         self.hp_max = 5
-        self.hp = self.hp_max
+        self.hp = hp_inicial  # ← USA HP RECEBIDO
         self.invulnerable = False
         self.invuln_timer = 0
         self.invuln_duration = 2.0
         
-        # Sistema de cooldown por inimigo
         self.damage_cooldown_per_enemy = {}
+
 
     def set_animation(self, animation_name):
         if self.animations and animation_name in self.animations:
             if self.current_animation != animation_name:
                 self.current_animation = animation_name
                 self.animations[animation_name].reset()
+
 
     def handle_input(self, keys):
         if not self.vivo or self.attacking:
@@ -76,33 +78,33 @@ class Player(pygame.sprite.Sprite):
             self.attack_timer = 0
             self.set_animation("attack")
 
+
     def apply_gravity(self):
         self.vel_y += GRAVIDADE
         if self.vel_y > 15:
             self.vel_y = 15
 
+
     def take_damage(self, damage=1, enemy_id=None):
-        """Recebe dano com cooldown por inimigo"""
         if not self.vivo:
             return
             
-        # Verifica cooldown desse inimigo específico
         if enemy_id and enemy_id in self.damage_cooldown_per_enemy:
             if self.damage_cooldown_per_enemy[enemy_id] > 0:
-                return  # ainda em cooldown
+                return
         
         if not self.invulnerable:
             self.hp -= damage
             self.invulnerable = True
             self.invuln_timer = 0
             
-            # Marca cooldown para esse inimigo
             if enemy_id:
                 self.damage_cooldown_per_enemy[enemy_id] = 2.0
             
             if self.hp <= 0:
                 self.hp = 0
                 self.die()
+
 
     def get_attack_hitbox(self):
         if not self.attacking:
@@ -125,6 +127,7 @@ class Player(pygame.sprite.Sprite):
                 hitbox_width,
                 hitbox_height
             )
+
 
     def update_animation(self, dt):
         if not self.vivo:
@@ -161,18 +164,17 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.center = old_center
 
+
     def update(self, tiles, dt, map_width=1200):
         if not self.vivo:
             self.update_animation(dt)
             return
         
-        # Atualiza cooldowns por inimigo
         for enemy_id in list(self.damage_cooldown_per_enemy.keys()):
             self.damage_cooldown_per_enemy[enemy_id] -= dt
             if self.damage_cooldown_per_enemy[enemy_id] <= 0:
                 del self.damage_cooldown_per_enemy[enemy_id]
         
-        # Atualiza invulnerabilidade
         if self.invulnerable:
             self.invuln_timer += dt
             if self.invuln_timer >= self.invuln_duration:
@@ -207,6 +209,7 @@ class Player(pygame.sprite.Sprite):
                     self.vel_y = 0
         
         self.update_animation(dt)
+
 
     def die(self):
         self.vivo = False

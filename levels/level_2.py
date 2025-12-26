@@ -15,17 +15,17 @@ class Level2(BaseLevel):
             "                              ",  # 1
             "                              ",  # 2
             "                              ",  # 3
-            "  K                           ",  # 4
-            "MMM                           ",  # 5
+            "                              ",  # 4
+            "                              ",  # 5
             "                              ",  # 6
             "                              ",  # 7
-            "    MM                        ",  # 8 - espaço de 1 tile
+            "                              ",  # 8 - espaço de 1 tile
             "                              ",  # 9
-            "                              ",  # 10
-            "      MM                      ",  # 11 - espaço de 2 tiles
+            "            M                 ",  # 10
+            "                              ",  # 11 - espaço de 2 tiles
             "                              ",  # 12
             "                              ",  # 13
-            "        MM                    ",  # 14 - espaço de 2 tiles
+            "                              ",  # 14 - espaço de 2 tiles
             "##############################",  # 15
         ]
         
@@ -36,10 +36,6 @@ class Level2(BaseLevel):
         
         self.criar_mapa(layout, tile_types)
         self.player_start = (80, 14 * TILE_SIZE)
-        self.key.add(Key(2 * TILE_SIZE, 4 * TILE_SIZE - 10))
+        self.key.add(Key(10 * TILE_SIZE, 14 * TILE_SIZE - 10)) # Posição da chave Coluna 10, Linha 13
         
-        # 2 ninjas perseguidores
-        self.enemies.add(Enemy(18 * TILE_SIZE, 14 * TILE_SIZE, 
-                              5 * TILE_SIZE, 28 * TILE_SIZE, tipo="chase"))
-        self.enemies.add(Enemy(10 * TILE_SIZE, 13 * TILE_SIZE, 
-                              3 * TILE_SIZE, 18 * TILE_SIZE, tipo="chase"))
+      

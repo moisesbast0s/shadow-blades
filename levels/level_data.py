@@ -1,5 +1,5 @@
 # level/level_data.py
-from level.tiles import Tile
+from .tiles import Tile
 
 TILE_SIZE = 48
 LARGURA_MAPA = 20  # tiles
