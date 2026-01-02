@@ -13,9 +13,6 @@
 
 **Lâminas das Sombras** é um jogo de plataforma 2D de ação onde você controla um Cavaleiro Templário preso em território hostil, enfrentando ninjas traiçoeiros para encontrar o caminho de volta para casa.
 
-### Pitch (150 caracteres)
-*"Cavaleiro Templário vs Ninjas. Sobreviva, lute e escape da fortaleza das sombras neste jogo de plataforma 2D cheio de ação."*
-
 ---
 
 ## 2. PILARES DO JOGO
