@@ -3,6 +3,7 @@ import pygame
 from settings import VEL_INIMIGO, GRAVIDADE
 from core.animation import Animation
 
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y, limite_esq, limite_dir, tipo="chase"):
         super().__init__()
@@ -12,7 +13,7 @@ class Enemy(pygame.sprite.Sprite):
         try:
             self.animations = {
                 "idle": Animation("assets/images/enemy/idle", 0.15, ENEMY_SCALE, loop=True),
-                "run": Animation("assets/images/enemy/run", 0.1, ENEMY_SCALE, loop=True),      # ← ADICIONADO
+                "run": Animation("assets/images/enemy/run", 0.1, ENEMY_SCALE, loop=True),
                 "attack": Animation("assets/images/enemy/attack", 0.1, ENEMY_SCALE, loop=True),
                 "death": Animation("assets/images/enemy/death", 0.15, ENEMY_SCALE, loop=False),
             }
@@ -30,8 +31,11 @@ class Enemy(pygame.sprite.Sprite):
         
         self.vel_x = VEL_INIMIGO
         self.vel_y = 0
-        self.limite_esq = limite_esq
-        self.limite_dir = limite_dir
+        
+        # ✅ CORREÇÃO: Garantir ordem correta dos limites
+        self.limite_esq = min(limite_esq, limite_dir)
+        self.limite_dir = max(limite_esq, limite_dir)
+        
         self.direcao = 1
         self.vivo = True
         self.no_chao = False
@@ -43,6 +47,10 @@ class Enemy(pygame.sprite.Sprite):
         self.hp = 1
         self.death_timer = 0
         self.death_duration = 0.8
+        
+        # ✅ DEBUG
+        print(f"Enemy criado em x={x}, limites: {self.limite_esq} -> {self.limite_dir}")
+
 
     def set_animation(self, animation_name):
         if self.animations and animation_name in self.animations:
@@ -53,11 +61,13 @@ class Enemy(pygame.sprite.Sprite):
                 self.current_animation = animation_name
                 self.animations[animation_name].reset()
 
+
     def take_damage(self, damage=1):
         if self.vivo:
             self.hp -= damage
             if self.hp <= 0:
                 self.die()
+
 
     def die(self):
         self.vivo = False
@@ -66,6 +76,7 @@ class Enemy(pygame.sprite.Sprite):
         self.current_animation = "death"
         if self.animations:
             self.animations["death"].reset()
+
 
     def apply_gravity(self, tiles):
         self.vel_y += GRAVIDADE
@@ -86,6 +97,7 @@ class Enemy(pygame.sprite.Sprite):
                         self.rect.top = tile.rect.bottom
                         self.vel_y = 0
 
+
     def detect_player(self, player_pos):
         if not player_pos:
             return False
@@ -94,6 +106,7 @@ class Enemy(pygame.sprite.Sprite):
         distance_y = abs(player_pos[1] - self.rect.centery)
         
         return distance_x <= self.detection_range and distance_y <= 50
+
 
     def update(self, dt, tiles=None, player_pos=None):
         if not self.vivo:
@@ -106,7 +119,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.kill()
             return
         
-        # Comportamento com animações
+        # ✅ COMPORTAMENTO CORRIGIDO
         if self.tipo == "chase" and player_pos and self.detect_player(player_pos):
             # Persegue o player
             if player_pos[0] < self.rect.centerx:
@@ -119,35 +132,39 @@ class Enemy(pygame.sprite.Sprite):
             # Usa RUN quando persegue
             distance_to_player = abs(player_pos[0] - self.rect.centerx)
             if distance_to_player < 60:
-                self.set_animation("attack")  # muito perto = ataca
+                self.set_animation("attack")
             else:
-                self.set_animation("run")     # longe = corre atrás
+                self.set_animation("run")
         else:
-            # Patrulha
-            if self.rect.left <= self.limite_esq:
-                self.vel_x = abs(VEL_INIMIGO)
-                self.direcao = 1
-            elif self.rect.right >= self.limite_dir:
-                self.vel_x = -abs(VEL_INIMIGO)
-                self.direcao = -1
+            # ✅ PATRULHA CORRIGIDA - Lógica simplificada e funcional
+            # Move continuamente na direção atual
+            self.vel_x = VEL_INIMIGO * self.direcao
             
-            # Usa RUN quando patrulha também
+            # Verifica colisão com limites e inverte direção
+            if self.direcao == 1:  # Indo para direita
+                if self.rect.right >= self.limite_dir:
+                    self.direcao = -1
+                    self.rect.right = self.limite_dir  # Força posição no limite
+            else:  # Indo para esquerda (direcao == -1)
+                if self.rect.left <= self.limite_esq:
+                    self.direcao = 1
+                    self.rect.left = self.limite_esq  # Força posição no limite
+            
+            # Usa RUN quando patrulha
             if abs(self.vel_x) > 0.1:
-                self.set_animation("run")   # andando
+                self.set_animation("run")
             else:
-                self.set_animation("idle")  # parado
+                self.set_animation("idle")
         
-        # Movimento horizontal
+        # ✅ MOVIMENTO HORIZONTAL
         self.rect.x += self.vel_x
         
-        # Limites
+        # ✅ SEGURANÇA ADICIONAL - força dentro dos limites
         if self.rect.left < self.limite_esq:
             self.rect.left = self.limite_esq
-            self.vel_x = abs(VEL_INIMIGO)
             self.direcao = 1
         elif self.rect.right > self.limite_dir:
             self.rect.right = self.limite_dir
-            self.vel_x = -abs(VEL_INIMIGO)
             self.direcao = -1
         
         # Gravidade

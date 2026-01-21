@@ -81,8 +81,8 @@ class Player(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         self.vel_y += GRAVIDADE
-        if self.vel_y > 15:
-            self.vel_y = 15
+        if self.vel_y > 10:
+            self.vel_y = 10
 
 
     def take_damage(self, damage=1, enemy_id=None):
