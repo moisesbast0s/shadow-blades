@@ -43,7 +43,7 @@ class Level2(BaseLevel):
         # ✅ CHAVE CORRIGIDA - na plataforma da linha 3, coluna 32
         # O layout tem 36 colunas (contando os espaços), então coluna 32 está OK
         # Mas vamos colocar um pouco mais acima das plataformas da linha 3
-        self.key.add(Key(32 * TILE_SIZE, 2 * TILE_SIZE + 10))
+        self.key.add(Key(25 * TILE_SIZE, 2 * TILE_SIZE + 10))
         
         # Debug para verificar
         print(f"DEBUG Fase 2:")
