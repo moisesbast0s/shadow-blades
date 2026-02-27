@@ -50,21 +50,24 @@ class Level3(BaseLevel):
         # --- ADICIONANDO OS 3 NINJAS COM LIMITES DE PATRULHA ATUALIZADOS ---
         # Formato: Enemy(pos_x, pos_y, limite_esquerda, limite_direita)
         
-        # Ninja 1: Ponte central suspensa (patrulha do bloco 8 ao 19)
+        # Ninja 1: Ponte central suspensa, linha 9 (patrulha cols 8-19)
         self.enemies.add(Enemy(
-            12 * TILE_SIZE, 8 * TILE_SIZE, 
-            8 * TILE_SIZE, 19 * TILE_SIZE
+            12 * TILE_SIZE, 8 * TILE_SIZE,
+            8 * TILE_SIZE, 19 * TILE_SIZE,
+            tipo="patrol", hp=2
         ))
-        
-        # Ninja 2: Chão de pedra à direita (patrulha do bloco 23 ao 29)
+
+        # Ninja 2: Chão — perseguidor (cobre todo o chão)
         self.enemies.add(Enemy(
-            26 * TILE_SIZE, 14 * TILE_SIZE, 
-            23 * TILE_SIZE, 29 * TILE_SIZE
+            26 * TILE_SIZE, 14 * TILE_SIZE,
+            1 * TILE_SIZE, 29 * TILE_SIZE,
+            tipo="chase", hp=2
         ))
-        
-        # Ninja 3: Ponte média à esquerda (patrulha curta do bloco 4 ao 7)
+
+        # Ninja 3: Ponte média esquerda, linha 6 — guarda (cols 4-7)
         self.enemies.add(Enemy(
-            5 * TILE_SIZE, 5 * TILE_SIZE, 
-            4 * TILE_SIZE, 7 * TILE_SIZE
+            5 * TILE_SIZE, 5 * TILE_SIZE,
+            4 * TILE_SIZE, 7 * TILE_SIZE,
+            tipo="guard", hp=1
         ))
 

@@ -50,44 +50,44 @@ class Level6(BaseLevel):
         # Formato: Enemy(x, y, limite_esq, limite_dir, tipo="chase")
         # y recomendado: (linha_da_plataforma - 1) * TILE_SIZE
 
-        # 1) Patrulha no chão
+        # 1) Patrulha no chão — cobre todo o chão
         self.enemies.add(Enemy(
             4 * TILE_SIZE, 14 * TILE_SIZE,
-            1 * TILE_SIZE, 10 * TILE_SIZE,
-            tipo="patrol"
+            1 * TILE_SIZE, 29 * TILE_SIZE,
+            tipo="patrol", hp=2
         ))
 
-        # 2) Patrulha no telhado baixo (linha 14, bloco do meio)
+        # 2) Guarda no telhado baixo central (linha 14, cols 12-17)
         self.enemies.add(Enemy(
-            13 * TILE_SIZE, 13 * TILE_SIZE,
-            12 * TILE_SIZE, 18 * TILE_SIZE,
-            tipo="patrol"
+            14 * TILE_SIZE, 13 * TILE_SIZE,
+            2 * TILE_SIZE, 28 * TILE_SIZE,
+            tipo="guard", hp=2
         ))
 
-        # 3) Patrulha na plataforma da linha 12 (esquerda)
+        # 3) Patrulha na plataforma da linha 12 (esquerda, cols 5-9)
         self.enemies.add(Enemy(
             6 * TILE_SIZE, 11 * TILE_SIZE,
             5 * TILE_SIZE, 10 * TILE_SIZE,
-            tipo="patrol"
+            tipo="patrol", hp=2
         ))
 
-        # 4) Perseguidor na plataforma da linha 10 (esquerda)
+        # 4) Perseguidor na plataforma da linha 10 (cols 8-13)
         self.enemies.add(Enemy(
             9 * TILE_SIZE, 9 * TILE_SIZE,
             8 * TILE_SIZE, 14 * TILE_SIZE,
-            tipo="chase"
+            tipo="chase", hp=3
         ))
 
-        # 5) Patrulha na plataforma da linha 8 (meio)
+        # 5) Saltador na plataforma da linha 8 (cols 11-15)
         self.enemies.add(Enemy(
             12 * TILE_SIZE, 7 * TILE_SIZE,
             11 * TILE_SIZE, 16 * TILE_SIZE,
-            tipo="patrol"
+            tipo="jumper", hp=3
         ))
 
-        # 6) Perseguidor na plataforma da linha 6 (direita)
+        # 6) Perseguidor na plataforma alta da linha 6 (cols 17-23)
         self.enemies.add(Enemy(
-            18 * TILE_SIZE, 5 * TILE_SIZE,
+            19 * TILE_SIZE, 5 * TILE_SIZE,
             17 * TILE_SIZE, 24 * TILE_SIZE,
-            tipo="chase"
+            tipo="chase", hp=3
         ))

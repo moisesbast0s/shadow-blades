@@ -1,11 +1,8 @@
 # GAME DESIGN DOCUMENT (GDD)
 ## Lâminas das Sombras (Shadow Blades)
 
-**Versão**: 1.0  
-**Data**: 26 de dezembro de 2025  
-**Status**: Beta - Funcional, aguardando ajustes finais
 
-**Desenvolvedores**: 
+**Desenvolvedores**: Moises
 
 ---
 
@@ -18,19 +15,19 @@
 ## 2. PILARES DO JOGO
 
 ### 2.1 Meta (Objetivo)
-Sobreviver aos ataques dos ninjas, atravessar 3 fases perigosas e escapar da fortaleza inimiga com vida.
+Sobreviver aos ataques dos ninjas, atravessar 6 fases perigosas e escapar da fortaleza inimiga com vida.
 
 ### 2.2 Dinâmica Central
 - **Exploração**: Navegar por plataformas, evitar armadilhas e encontrar a chave de saída
 - **Combate**: Enfrentar ninjas ágeis usando espada corpo a corpo
-- **Sobrevivência**: Gerenciar 5 pontos de vida através de 3 fases consecutivas
+- **Sobrevivência**: Gerenciar 5 pontos de vida através de 6 fases consecutivas
 
 ### 2.3 Mecânicas (Regras)
 - **Sistema de Vidas**: 5 HP que persistem entre fases (não resetam)
 - **Combate por proximidade**: Ataque corpo a corpo com hitbox direcional
 - **Invulnerabilidade temporária**: 2 segundos após receber dano
-- **Morte dos inimigos**: Ninjas morrem com 1 golpe, mas atacam em grupo
-- **Progressão linear**: Fase 1 → Fase 2 → Fase 3 → Vitória
+- **Morte dos inimigos**: Ninjas morrem com 1-3 golpes dependendo do tipo e fase
+- **Progressão linear**: Fase 1 → Fase 2 → Fase 3 → Fase 4 → Fase 5 → Fase 6 → Vitória
 
 ---
 
@@ -43,46 +40,53 @@ Sobreviver aos ataques dos ninjas, atravessar 3 fases perigosas e escapar da for
 | Mover Esquerda | A / ← | Move o cavaleiro para esquerda |
 | Mover Direita | D / → | Move o cavaleiro para direita |
 | Pular | ESPAÇO / W / ↑ | Pula (só no chão) |
-| Atacar | J | Golpe de espada com alcance médio |
-| Pausar | ESC | Volta ao menu principal |
+| Atacar | J | Golpe de espada com alcance curto |
+| Pausar | ESC | Pausa o jogo (toggle) |
+| Sair | Q | Fecha o jogo (funciona em qualquer tela) |
 
 ### 3.2 Ações do Personagem
 
 #### Movimentação
-- **Velocidade**: Média (mais pesado que os ninjas)
-- **Pulo**: Alcance vertical médio, realista
-- **Gravidade**: Peso consistente, sem "pulo flutuante"
+- **Velocidade**: 4 px/frame (mais pesado que os ninjas)
+- **Pulo**: Força de -15, alcance vertical médio
+- **Gravidade**: 0.5 por frame, velocidade terminal de 10 px/frame
 
 #### Combate
 - **Ataque básico**: Golpe de espada horizontal
-- **Alcance**: 80px à frente do personagem
+- **Hitbox de ataque**: 30×35 pixels à frente do personagem
 - **Duração**: 0.5 segundos de animação
 - **Cooldown**: Pode atacar novamente após animação terminar
-- **Hitbox**: 80x60 pixels, muda de lado conforme direção
+- **Direção**: Hitbox muda de lado conforme direção do jogador
 
 #### Sistema de Dano
 - **HP Total**: 5 pontos
 - **Dano por hit**: 1 HP
-- **Invulnerabilidade**: 2 segundos após sofrer dano (pisca vermelho)
-- **Knockback**: Empurrado 70px para trás ao ser atingido
+- **Invulnerabilidade**: 2 segundos após sofrer dano (pisca vermelho/transparente)
+- **Cooldown por inimigo**: 2 segundos — o mesmo inimigo não pode causar dano consecutivo
 - **Morte**: HP chega a 0 → Game Over
 
 ### 3.3 Visão do Jogador
 - **Câmera lateral**: Segue o player horizontalmente
 - **Centralização**: Player sempre no centro da tela (quando possível)
-- **Limites**: Câmera não ultrapassa bordas do mapa (1200px de largura)
+- **Limites**: Câmera não ultrapassa bordas do mapa (varia por fase: 1200px ou 1440px)
 
 ### 3.4 Sistema de Progressão
 
 #### Estrutura das Fases
-1. **Fase 1 - Ruínas do Templo**: Tutorial implícito, 2-3 ninjas, plataformas simples
-2. **Fase 2 - Jardim de Bambu**: 5-6 ninjas, plataformas mais altas, buracos
-3. **Fase 3 - Telhados da Fortaleza**: 8+ ninjas, plataformas complexas, ninja boss (3 HP)
+
+| Fase | Nome | Dificuldade | Inimigos | Tipos |
+|------|------|-------------|----------|-------|
+| 1 | Tutorial | ★☆☆☆☆☆ | 1 | Chase |
+| 2 | Floresta Sombria | ★★☆☆☆☆ | 2 | Patrol + Chase |
+| 3 | Ponte Suspensa | ★★★☆☆☆ | 3 | Patrol + Chase + Guard |
+| 4 | Cavernas Subterrâneas | ★★★★☆☆ | 4 | Patrol ×2 + Chase + Jumper |
+| 5 | Castelo Final | ★★★★★☆ | 5 | Patrol + Chase + Guard + Jumper ×2 |
+| 6 | Telhados | ★★★★★★ | 6 | Patrol ×2 + Chase ×2 + Guard + Jumper |
 
 #### Condições de Vitória (por fase)
-- Coletar a **chave** ao final do mapa
-- Transição automática após 0.5 segundos
-- **HP é mantido** para a próxima fase
+- Coletar a **chave dourada** posicionada no mapa
+- Transição automática para próxima fase
+- **HP é mantido** para a próxima fase (não reseta)
 
 #### Condições de Derrota
 - HP chega a 0
@@ -95,10 +99,10 @@ Sobreviver aos ataques dos ninjas, atravessar 3 fases perigosas e escapar da for
 ### 4.1 História
 
 #### Contexto Histórico
-Durante as Cruzadas, um Cavaleiro Templário em missão no Oriente é emboscado e capturado por uma ordem secreta de ninjas. Aprisionado em uma fortaleza remota, ele descobre que a única saída é atravessar três níveis mortais vigiados pelos assassinos das sombras.
+Durante as Cruzadas, um Cavaleiro Templário em missão no Oriente é emboscado e capturado por uma ordem secreta de ninjas. Aprisionado em uma fortaleza remota, ele descobre que a única saída é atravessar seis níveis mortais vigiados pelos assassinos das sombras.
 
 #### Narrativa do Jogo
-Sem aliados, ferido mas determinado, o cavaleiro deve usar sua espada sagrada e armadura resistente para enfrentar inimigos rápidos e letais. Cada fase representa uma área da fortaleza: as ruínas externas, o jardim interno e os telhados onde o líder ninja aguarda.
+Sem aliados, ferido mas determinado, o cavaleiro deve usar sua espada sagrada e armadura resistente para enfrentar inimigos rápidos e letais. Cada fase representa uma área diferente da fortaleza: ruínas externas, floresta sombria, pontes suspensas, cavernas subterrâneas, o castelo principal e os telhados onde a fuga final acontece.
 
 #### Tom
 Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
@@ -106,32 +110,32 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 ### 4.2 Personagens
 
 #### Player: Cavaleiro Templário
-- **Nome**: Cuca Cabeludo
-- **Idade**: ~19 anos (Twink)
 - **Aparência**: Armadura branca/prata, elmo com pluma vermelha, escudo circular, espada longa
 - **Personalidade**: Honrado, corajoso, resiliente
 - **Habilidades**:
   - Alta resistência (5 HP)
-  - Ataque corpo a corpo forte
+  - Ataque corpo a corpo forte (hitbox 30×35)
   - Mais lento que os ninjas, mas aguenta mais dano
 - **Animações**: idle, run, jump, attack, death
 
-#### Inimigos: Ninjas
-- **Tipo**: Assassinos orientais
-- **Aparência**: Roupa preta/vermelha, máscara, katana
-- **Comportamento**:
-  - **Patrulha**: Andam entre limites definidos (idle/run)
-  - **Detecção**: Alcance de 400px horizontalmente
-  - **Perseguição**: Correm em direção ao player quando detectam
-  - **Ataque**: Golpe corpo a corpo quando < 60px de distância
-- **Fraqueza**: Morrem com 1 golpe
-- **Perigo**: Aparecem em grupos, cercam o jogador
+#### Inimigos: Ninjas (4 Tipos de Comportamento)
 
-#### Boss (Fase 3): Ninja Mestre
-- **Diferencial**: 3 HP em vez de 1
-- **Velocidade**: 1.5x mais rápido que ninjas normais
-- **Alcance de detecção**: 600px
-- **Animações**: idle, run, attack, death
+**Atributos Gerais:**
+- Aparência: Roupa preta/vermelha, máscara, katana
+- Detecção: 350px horizontal, 120px vertical
+- Alcance de ataque: 60px
+- Todos atacam corpo a corpo quando o player está próximo
+
+| Tipo | Comportamento | Cooldown de Ataque | Descrição |
+|------|---------------|-------------------|-----------|
+| **Patrol** | Patrulha entre limites, pausa ao virar | 1.8s | Não persegue o player. Previsível mas perigoso em grupo |
+| **Chase** | Patrulha + persegue ao detectar | 1.0s | Tipo mais comum. Corre em direção ao player quando detectado |
+| **Jumper** | Como chase, mas pula obstáculos | 1.0s | Pode saltar sobre paredes e desníveis para alcançar o player |
+| **Guard** | Fica parado, só ataca quando player chega | 0.8s | Guarda posições-chave. Ataque rápido mas imóvel |
+
+**Variação de HP por fase:**
+- Fases 1-2: 1 HP (morrem com 1 golpe)
+- Fases 3-6: 2-3 HP (exigem mais golpes)
 
 ---
 
@@ -141,79 +145,74 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 
 #### Estilo Visual
 - **Pixel Art Low-Res**: Estilo retrô 16-bit (inspirado em SNES/Genesis)
+- **Fonte**: Press Start 2P (pixel font) em toda a interface
 - **Paleta de Cores**:
   - **Cavaleiro**: Prata/branco, vermelho (pluma), dourado (detalhes)
   - **Ninjas**: Preto, vermelho escuro, cinza
   - **Cenário**: Tons terrosos (marrom, bege), lanternas (amarelo/laranja), vegetação (verde escuro)
+  - **HUD**: Corações vermelhos, texto dourado
 
 #### Ambientação por Fase
-1. **Fase 1 - Ruínas**: Pedras antigas, lanternas, céu noturno estrelado
-2. **Fase 2 - Jardim**: Bambus, lanternas de papel, ponte de madeira
-3. **Fase 3 - Telhados**: Telhas japonesas, lua cheia, silhuetas de montanhas
+1. **Fase 1 - Tutorial**: Ruínas simples, plataformas básicas, céu noturno
+2. **Fase 2 - Floresta Sombria**: Vegetação densa, mapa mais largo (36 colunas)
+3. **Fase 3 - Ponte Suspensa**: Pontes em múltiplas alturas, plataformas laterais
+4. **Fase 4 - Cavernas Subterrâneas**: Paredes verticais internas, escada gradual
+5. **Fase 5 - Castelo Final**: Plataformas dispersas, mapa largo (36 colunas)
+6. **Fase 6 - Telhados**: Plataformas em escada ascendente, chave no topo
 
 ### 5.2 Interface (UI/UX)
 
 #### HUD (Heads-Up Display)
 - **Posição**: Canto superior esquerdo
 - **Elementos**:
-  - HP: 5 corações (vazios quando perde vida)
-  - Fase: "Fase X/3"
+  - HP: 5 corações pixel art (vazios quando perde vida)
+  - Fase: "Fase X/6" (canto superior direito)
   - Controles: Aparecem nos primeiros 5 segundos de cada fase
 
 #### Telas
 
 **1. Menu Inicial**
-- Título: "LÂMINAS DAS SOMBRAS"
-- Subtítulo: "Shadow Blades"
-- História curta (3 linhas)
-- Controles
-- "Pressione ESPAÇO para começar"
+- Imagem de fundo: pixel art com fortaleza, cavaleiro, ninjas, lua
+- Título: "SHADOW BLADES" (pixel font dourada)
+- Texto de história + controles
+- ESPAÇO para começar / Q para sair
 
 **2. Gameplay**
-- HUD minimalista
-- Foco no cenário e personagens
+- HUD minimalista (corações + fase)
+- Sistema de pausa com overlay semi-transparente ("PAUSADO")
+  - ESC para continuar
+  - Q para sair
 
 **3. Game Over**
 - Fundo vermelho escuro
-- "DERROTA"
+- "DERROTA" (pixel font vermelha)
 - Mensagem: "Os ninjas das sombras prevaleceram"
-- Opções: Tentar de novo / Menu
+- ESPAÇO: tentar de novo / ESC: menu / Q: sair
 
 **4. Vitória**
 - Fundo verde escuro
 - "VITÓRIA! Missão Cumprida"
-- Mensagem: "O cavaleiro encontrou o caminho de volta"
-- Opções: Jogar de novo / Menu
+- Mensagem: "O cavaleiro encontrou o caminho de volta para casa"
+- ESPAÇO: jogar de novo / ESC: menu / Q: sair
 
 ### 5.3 Trilha Sonora e Efeitos
 
-#### Música
-- **Menu**: Tema épico medieval com toques orientais
-- **Fase 1**: Tensão crescente, bateria suave
-- **Fase 2**: Intensifica, adiciona shamisen (instrumento japonês)
-- **Fase 3/Boss**: Combate intenso, taiko drums, cordas dramáticas
-- **Vitória**: Fanfarra heroica
-- **Game Over**: Melodia melancólica com sino
+#### Sistema de Áudio
+- **AudioManager**: Gerenciador centralizado de música e efeitos
+- **Músicas**: Geradas proceduralmente (WAV placeholders) por estado (menu, gameplay, gameover, victory)
+- **Volume**: Música 40% / SFX 60%
 
 #### Efeitos Sonoros
 
 **Player:**
-- Passos pesados (metal batendo)
+- Pulo (esforço)
 - Golpe de espada (whoosh + impacto)
-- Pulo (esforço vocal + vento)
-- Receber dano (grito + metal)
-- Morte (queda dramática)
+- Receber dano (impacto)
+- Morte (queda)
 
 **Ninjas:**
-- Passos leves/rápidos
-- Whoosh ao correr
-- Golpe rápido
+- Golpe de ataque
 - Morte (grito curto)
-
-**Ambiente:**
-- Vento suave
-- Lanternas crepitando
-- Bambu balançando (Fase 2)
 
 ---
 
@@ -222,7 +221,6 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 ### 6.1 Plataforma de Publicação
 - **Primária**: PC (Windows, Linux, Mac)
 - **Futura**: Possível port para Web (HTML5 via Pygbag)
-- **Não planejado**: Mobile, Consoles
 
 ### 6.2 Público-Alvo
 - **Idade**: 10+ anos (violência cartunesca, sem sangue)
@@ -235,21 +233,60 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 ### 6.3 Tecnologia Utilizada
 
 #### Engine e Linguagem
-- **Engine**: Pygame (Python)
-- **Linguagem**: Python 3.x
-- **Resolução**: 800x600 pixels
+- **Engine**: Pygame 2.5.2 (SDL 2.30.0)
+- **Linguagem**: Python 3.12
+- **Resolução interna**: 1200×800 pixels
+- **Resolução da janela**: Escalável (padrão 1.5× = 1800×1200)
 - **FPS**: 60 quadros por segundo
+- **Tile Size**: 40×40 pixels
 
+#### Arquitetura do Projeto
+```
+main.py              → Ponto de entrada, inicialização
+settings.py          → Constantes globais (resolução, física, áudio)
+core/
+  game.py            → Loop principal, máquina de estados, escala
+  animation.py       → Sistema de animação multi-frame
+  asset_loader.py    → Carregamento de assets
+  states.py          → Classe base State
+entities/
+  player.py          → Cavaleiro (movimento, combate, HP)
+  enemy.py           → Ninja (4 tipos de IA, patrulha, ataque)
+levels/
+  base_level.py      → Classe base + Tile + Key (chave coletável)
+  level_1.py → 6.py  → Layout e configuração de cada fase
+  level_data.py      → Dados auxiliares de level design
+  tiles.py           → Tipos de tiles
+states/
+  menu.py            → Tela de menu inicial
+  gameplay.py        → Estado principal (jogo, pausa, colisões)
+  gameover.py        → Tela de derrota
+  victory.py         → Tela de vitória
+ui/
+  hud.py             → Interface in-game (corações, fase)
+assets/
+  fonts/             → Press Start 2P (pixel font)
+  images/            → Sprites, backgrounds, UI
+  audio/             → Músicas e efeitos (gerados proceduralmente)
+```
 
 #### Sistemas Implementados
-- ✅ Sistema de animação multi-frame
-- ✅ Sistema de colisão tile-based
-- ✅ Sistema de câmera seguindo player
+- ✅ Sistema de animação multi-frame com flip direcional
+- ✅ Sistema de colisão tile-based (horizontal + vertical)
+- ✅ Sistema de câmera seguindo player com limites de mapa
 - ✅ Sistema de HP persistente entre fases
-- ✅ IA de inimigos (patrulha + perseguição + ataque)
-- ✅ Sistema de invulnerabilidade com feedback visual
+- ✅ IA de inimigos com 4 comportamentos (patrol, chase, jumper, guard)
+- ✅ Sistema de invulnerabilidade com feedback visual (pisca)
 - ✅ Sistema de knockback ao receber dano
-- ✅ Sistema de estados (Menu/Gameplay/GameOver/Victory)
+- ✅ Sistema de estados (Menu / Gameplay / GameOver / Victory)
+- ✅ Sistema de áudio (AudioManager com música + SFX)
+- ✅ Sistema de pausa (ESC toggle) com overlay
+- ✅ Sistema de escala proporcional da janela
+- ✅ Pixel font (Press Start 2P) em toda interface
+- ✅ Chave coletável com animação flutuante
+- ✅ Cooldown de ataque por tipo de inimigo
+- ✅ Colisão horizontal com tiles (inimigos não atravessam paredes)
+- ✅ 6 fases completas com level design único
 
 ### 6.4 Requisitos Técnicos
 
@@ -257,7 +294,7 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 - OS: Windows 7+ / Linux / macOS 10.12+
 - Processador: 1.5 GHz
 - RAM: 512 MB
-- Gráficos: Qualquer placa com OpenGL 2.0+
+- Gráficos: Qualquer placa com suporte a SDL 2.0
 - Armazenamento: 50 MB
 
 **Dependências:**
@@ -268,15 +305,20 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 
 ## 7. ESCOPO DO PROJETO
 
-### 7.1 Versão Atual (MVP - Minimum Viable Product)
-- ✅ 3 fases jogáveis
-- ✅ 1 tipo de inimigo (ninja padrão)
-- ✅ Sistema de combate básico
-- ✅ Sistema de HP persistente
-- ✅ Telas de menu, game over e vitória
-- ✅ HUD funcional
+### 7.1 Versão Atual
+- ✅ 6 fases jogáveis com level design único
+- ✅ 4 tipos de inimigo (patrol, chase, jumper, guard)
+- ✅ Sistema de combate com hitbox direcional
+- ✅ Sistema de HP persistente entre fases
+- ✅ Telas de menu, game over e vitória (pixel art)
+- ✅ HUD funcional com corações e indicador de fase
+- ✅ Sistema de pausa com overlay
+- ✅ Sistema de áudio (música + efeitos)
+- ✅ Escala proporcional da janela
+- ✅ Pixel font (Press Start 2P)
+- ✅ Chave coletável com animação flutuante
 
-
+---
 
 ## 8. DIFERENCIAL COMPETITIVO
 
@@ -285,8 +327,8 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 1. **Contraste de estilos**: Cavaleiro pesado/resistente VS ninjas ágeis/frágeis
 2. **HP persistente**: Decisões táticas importam (não resetar entre fases aumenta tensão)
 3. **Estética única**: Mistura de medieval europeu com oriental (cruzadas + ninjas)
-4. **Pixel art polido**: Animações fluidas, paleta coesa
-5. **Curva de dificuldade equilibrada**: Fases curtas mas desafiadoras
+4. **4 tipos de IA inimiga**: Cada tipo exige uma estratégia diferente de abordagem
+5. **Curva de dificuldade progressiva**: De 1 inimigo simples a 6 ninjas com múltiplos comportamentos
 
 ---
 
@@ -295,46 +337,50 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 | Fase | Duração | Tarefas | Status |
 |------|---------|---------|--------|
 | **Protótipo** | 2 semanas | Movimento básico, 1 fase, colisões | ✅ Concluído |
-| **Alpha** | 3 semanas | 3 fases, inimigos, combate, animações | ✅ Concluído |
+| **Alpha** | 3 semanas | 6 fases, inimigos, combate, animações | ✅ Concluído |
 | **Beta** | 2 semanas | Telas, HUD, polish, balanceamento | ✅ Concluído |
-| **Polish** | 1 semana | Som, efeitos visuais, correções | 🔄 Em andamento |
+| **Polish** | 1 semana | Áudio, pixel font, pausa, escala, efeitos visuais | ✅ Concluído |
 | **Release** | - | Publicação no itch.io / GitHub | ⏳ Planejado |
 
 ---
 
 ## 10. EQUIPE E CRÉDITOS
 
-**Game Designer & Programador**: Moises
-**Artista de Sprites**: [Fonte dos assets ou "Stock Assets"]  
+**Game Designer & Programador**: Moises  
 **Engine**: Pygame (Python)  
+**Fonte**: Press Start 2P (Google Fonts - OFL License)  
 **Inspirações**: Hollow Knight, Dead Cells, Shovel Knight, Mark of the Ninja
 
 ---
 
 ## 11. CONTATO E LINKS
 
-- **GitHub**: [teste]
-- **Itch.io**: [testes]
-- **Email**: [teste]
+- **GitHub**: [a definir]
+- **Itch.io**: [a definir]
+- **Email**: [a definir]
 
 ---
 
 **Documento criado em**: 26 de dezembro de 2025  
-**Versão**: 1.0  
-**Status do Projeto**: Beta - Funcional, aguardando polish final
+**Última atualização**: 27 de fevereiro de 2026  
+**Versão**: 2.0  
+**Status do Projeto**: Polish Concluído — Pronto para Release
 
 ---
 
 ## Notas de Desenvolvimento
 
 ### Changelog
-- **26/12/2025**: Criação do documento inicial
-- Sistema de vidas persistentes implementado
-- Telas atualizadas com novo tema
-- 6 fases jogáveis completas
-
-### Próximos Passos
-1. Adicionar sistema de som
-2. Adicionar partículas e polish visual
-3. Testes de balanceamento
-4. Preparar para publicação
+- **26/12/2025**: Criação do documento inicial (v1.0)
+- **27/02/2026**: Atualização completa do GDD (v2.0)
+  - 6 fases jogáveis completas
+  - 4 tipos de inimigos implementados (patrol, chase, jumper, guard)
+  - Sistema de áudio (AudioManager com música e SFX)
+  - Sistema de pausa (ESC toggle) com overlay
+  - Pixel font (Press Start 2P) em toda interface
+  - Sistema de escala proporcional da janela (ESCALA configurável)
+  - Hitbox de ataque refinado (30×35px)
+  - Colisão horizontal com tiles para inimigos
+  - Chave coletável com animação flutuante
+  - Menu com pixel art de fundo
+  - Controle Q para sair em qualquer tela

@@ -44,19 +44,37 @@ class Level5(BaseLevel):
         
         # --- ADICIONANDO OS 5 INIMIGOS ---
         
-        # 1. Guarda do Chão (Esquerda)
-        self.enemies.add(Enemy(10 * TILE_SIZE, 14 * TILE_SIZE, 2 * TILE_SIZE, 15 * TILE_SIZE, tipo="patrol"))
-        
-        # 2. Perseguidor no Chão (Direita)
-        self.enemies.add(Enemy(20 * TILE_SIZE, 14 * TILE_SIZE, 15 * TILE_SIZE, 34 * TILE_SIZE, tipo="chase"))
-        
-        # 3. Patrulha na plataforma central (Linha 4)
-        self.enemies.add(Enemy(15 * TILE_SIZE, 3 * TILE_SIZE, 13 * TILE_SIZE, 20 * TILE_SIZE, tipo="patrol"))
-        
-        # 4. Guarda da escada (Linha 9)
-        self.enemies.add(Enemy(5 * TILE_SIZE, 8 * TILE_SIZE, 4 * TILE_SIZE, 8 * TILE_SIZE, tipo="patrol"))
-        
-        # 5. O SEGUNDO PERSEGUIDOR (Perto da Chave)
-        self.enemies.add(Enemy(10 * TILE_SIZE, 5 * TILE_SIZE, 2 * TILE_SIZE, 12 * TILE_SIZE, tipo="chase"))
+        # 1. Patrulha no chão (metade esquerda)
+        self.enemies.add(Enemy(
+            10 * TILE_SIZE, 14 * TILE_SIZE,
+            1 * TILE_SIZE, 18 * TILE_SIZE,
+            tipo="patrol", hp=2
+        ))
 
-        print("DEBUG: Fase 5 do Gabriel carregada com 5 inimigos!")
+        # 2. Perseguidor no chão (metade direita com overlap)
+        self.enemies.add(Enemy(
+            22 * TILE_SIZE, 14 * TILE_SIZE,
+            14 * TILE_SIZE, 35 * TILE_SIZE,
+            tipo="chase", hp=2
+        ))
+
+        # 3. Patrulha na plataforma central (linha 4, cols 13-19)
+        self.enemies.add(Enemy(
+            15 * TILE_SIZE, 3 * TILE_SIZE,
+            13 * TILE_SIZE, 20 * TILE_SIZE,
+            tipo="patrol", hp=2
+        ))
+
+        # 4. Guarda na plataforma esquerda (linha 9, cols 4-7)
+        self.enemies.add(Enemy(
+            6 * TILE_SIZE, 8 * TILE_SIZE,
+            4 * TILE_SIZE, 8 * TILE_SIZE,
+            tipo="guard", hp=2
+        ))
+
+        # 5. Saltador no chão — cobre todo o mapa
+        self.enemies.add(Enemy(
+            8 * TILE_SIZE, 14 * TILE_SIZE,
+            1 * TILE_SIZE, 35 * TILE_SIZE,
+            tipo="jumper", hp=3
+        ))

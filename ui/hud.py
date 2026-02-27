@@ -1,13 +1,13 @@
 # ui/hud.py
 import pygame
-from settings import COR_TEXTO
+from settings import COR_TEXTO, PIXEL_FONT
 
 class HUD:
     def __init__(self, game):
         self.game = game
-        self.font_small = pygame.font.Font(None, 28)
-        self.font_medium = pygame.font.Font(None, 36)
-        self.font_large = pygame.font.Font(None, 48)
+        self.font_small = pygame.font.Font(PIXEL_FONT, 10)
+        self.font_medium = pygame.font.Font(PIXEL_FONT, 14)
+        self.font_large = pygame.font.Font(PIXEL_FONT, 20)
         
         # Cores temáticas da Fortaleza
         self.cor_barra = (40, 30, 50)

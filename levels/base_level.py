@@ -1,5 +1,6 @@
 # levels/base_level.py
 import pygame
+import math
 from settings import TILE_SIZE, LARGURA, ALTURA
 
 class Tile(pygame.sprite.Sprite):
@@ -32,10 +33,19 @@ class Key(pygame.sprite.Sprite):
         super().__init__()
         try:
             self.image = pygame.image.load("assets/images/objects/key.png").convert_alpha()
+            self.image = pygame.transform.scale(self.image, (36, 36))
         except:
-            self.image = pygame.Surface((20, 20))
+            self.image = pygame.Surface((20, 20), pygame.SRCALPHA)
             self.image.fill((255, 215, 0))
         self.rect = self.image.get_rect(topleft=(x, y))
+        self._base_y = float(y)
+        self._bob_timer = 0.0
+
+    def update(self, dt):
+        """Efeito de flutuação suave para destacar a chave."""
+        self._bob_timer += dt
+        offset = math.sin(self._bob_timer * 3.0) * 5
+        self.rect.y = int(self._base_y + offset)
 
 class BaseLevel:
     def __init__(self):

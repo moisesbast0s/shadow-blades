@@ -49,6 +49,10 @@ class Player(pygame.sprite.Sprite):
         
         self.damage_cooldown_per_enemy = {}
 
+        # Flags de áudio (lidas pelo GameplayState)
+        self._sfx_jump = False
+        self._sfx_attack = False
+
 
     def set_animation(self, animation_name):
         if self.animations and animation_name in self.animations:
@@ -58,6 +62,10 @@ class Player(pygame.sprite.Sprite):
 
 
     def handle_input(self, keys):
+        # Reset flags de áudio a cada frame
+        self._sfx_jump = False
+        self._sfx_attack = False
+
         if not self.vivo or self.attacking:
             return
             
@@ -72,11 +80,13 @@ class Player(pygame.sprite.Sprite):
         if (keys[pygame.K_w] or keys[pygame.K_SPACE] or keys[pygame.K_UP]) and self.no_chao:
             self.vel_y = FORCA_PULO
             self.no_chao = False
+            self._sfx_jump = True
         
         if keys[pygame.K_j] and not self.attacking:
             self.attacking = True
             self.attack_timer = 0
             self.set_animation("attack")
+            self._sfx_attack = True
 
 
     def apply_gravity(self):
@@ -110,8 +120,8 @@ class Player(pygame.sprite.Sprite):
         if not self.attacking:
             return None
         
-        hitbox_width = 80
-        hitbox_height = 60
+        hitbox_width = 30
+        hitbox_height = 35
         
         if self.direcao == 1:
             return pygame.Rect(

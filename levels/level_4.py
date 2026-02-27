@@ -41,29 +41,34 @@ class Level4(BaseLevel):
         self.player_start = (80, 14 * TILE_SIZE)
         self.key.add(Key(10 * TILE_SIZE, 14 * TILE_SIZE - 10)) # Posição da chave Coluna 10, Linha 13
   
-        # INIMIGOS (2)
-        # 1. Patrulha lenta no início
+        # INIMIGOS (4) — posições corrigidas, respeitando paredes internas
+        # Paredes verticais: col 4 (linhas 2-14), col 12 (linhas 8-14)
+        # Seção chão 1: cols 0-3  |  Seção 2: cols 5-11  |  Seção 3: cols 13-29
+
+        # 1. Patrulha na seção 2 (entre paredes col 4 e col 12)
         self.enemies.add(Enemy(
             8 * TILE_SIZE, 14 * TILE_SIZE,
-            4 * TILE_SIZE, 30 * TILE_SIZE,
-            tipo="patrol"
+            5 * TILE_SIZE, 12 * TILE_SIZE,
+            tipo="patrol", hp=2
         ))
-        
-        # 2. Perseguidor mais rápido no meio-fim
+
+        # 2. Perseguidor na seção 3 (depois da parede col 12)
         self.enemies.add(Enemy(
-            8 * TILE_SIZE, 14 * TILE_SIZE,
-            4 * TILE_SIZE, 28 * TILE_SIZE,
-            tipo="chase"
+            20 * TILE_SIZE, 14 * TILE_SIZE,
+            13 * TILE_SIZE, 29 * TILE_SIZE,
+            tipo="chase", hp=2
         ))
-        #Patrulha lenta
+
+        # 3. Patrulha na plataforma superior (linha 2, cols 4-27)
         self.enemies.add(Enemy(
-            20 * TILE_SIZE, 2 * TILE_SIZE,
-            4 * TILE_SIZE, 30 * TILE_SIZE,
-            tipo="patrol"
+            10 * TILE_SIZE, 1 * TILE_SIZE,
+            5 * TILE_SIZE, 27 * TILE_SIZE,
+            tipo="patrol", hp=2
         ))
-        #Perseguidor mais rápido
+
+        # 4. Saltador na seção 3 (pode pular sobre a parede col 12)
         self.enemies.add(Enemy(
-            17 * TILE_SIZE, 14 * TILE_SIZE,
-            4 * TILE_SIZE, 28 * TILE_SIZE,
-            tipo="chase"
+            25 * TILE_SIZE, 14 * TILE_SIZE,
+            13 * TILE_SIZE, 29 * TILE_SIZE,
+            tipo="jumper", hp=2
         ))

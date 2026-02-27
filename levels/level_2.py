@@ -51,16 +51,16 @@ class Level2(BaseLevel):
         print(f"  Largura do layout: {len(layout[0])} colunas")
         
         # INIMIGOS (2)
-        # 1. Patrulha lenta no início
+        # 1. Patrulha no chão — metade esquerda
         self.enemies.add(Enemy(
             8 * TILE_SIZE, 14 * TILE_SIZE,
-            4 * TILE_SIZE, 12 * TILE_SIZE,
-            tipo="patrol"
+            1 * TILE_SIZE, 18 * TILE_SIZE,
+            tipo="patrol", hp=1
         ))
-        
-        # 2. Perseguidor mais rápido no meio-fim
+
+        # 2. Perseguidor no chão — metade direita (com overlap)
         self.enemies.add(Enemy(
             25 * TILE_SIZE, 14 * TILE_SIZE,
-            15 * TILE_SIZE, 34 * TILE_SIZE,
-            tipo="chase"
+            14 * TILE_SIZE, 35 * TILE_SIZE,
+            tipo="chase", hp=1
         ))

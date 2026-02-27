@@ -1,15 +1,21 @@
 # states/gameover.py
 import pygame
 from core.states import State
+from settings import PIXEL_FONT
 
 
 class GameOverState(State):
     def __init__(self, game):
         super().__init__(game)
-        self.title_font = pygame.font.Font(None, 90)
-        self.text_font = pygame.font.Font(None, 36)
-        self.small_font = pygame.font.Font(None, 28)
+        self.title_font = pygame.font.Font(PIXEL_FONT, 36)
+        self.text_font = pygame.font.Font(PIXEL_FONT, 12)
+        self.small_font = pygame.font.Font(PIXEL_FONT, 10)
 
+
+    def reset(self, **kwargs):
+        """Toca música de game over ao entrar neste estado."""
+        if hasattr(self.game, 'audio'):
+            self.game.audio.play_music("gameover")
 
     def handle_events(self, events):
         for e in events:
@@ -18,6 +24,8 @@ class GameOverState(State):
                     self.game.reiniciar_jogo()
                 if e.key == pygame.K_ESCAPE:
                     self.game.trocar_estado("MENU")
+                if e.key == pygame.K_q:
+                    self.game.running = False
 
 
     def draw(self, screen):
@@ -54,3 +62,7 @@ class GameOverState(State):
         menu_text = self.small_font.render("ESC - Voltar ao menu", True, (200, 200, 200))
         menu_rect = menu_text.get_rect(center=(screen.get_width()//2, 540))
         screen.blit(menu_text, menu_rect)
+
+        quit_text = self.small_font.render("Q - Sair do Jogo", True, (180, 180, 180))
+        quit_rect = quit_text.get_rect(center=(screen.get_width()//2, 580))
+        screen.blit(quit_text, quit_rect)

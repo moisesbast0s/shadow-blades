@@ -43,9 +43,9 @@ class Level1(BaseLevel):
         # Chave acessível no topo
         self.key.add(Key(26 * TILE_SIZE, 3 * TILE_SIZE - 10))
         
-        # 1 ninja perseguidor - patrulha quase todo o mapa
+        # 1 ninja perseguidor — cobre todo o chão
         self.enemies.add(Enemy(
             15 * TILE_SIZE, 14 * TILE_SIZE,
             1 * TILE_SIZE, 29 * TILE_SIZE,
-            tipo="chase"
+            tipo="chase", hp=1
         ))

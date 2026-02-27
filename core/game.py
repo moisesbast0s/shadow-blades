@@ -1,6 +1,7 @@
 # core/game.py
 import pygame
-from settings import COR_FUNDO
+from settings import COR_FUNDO, VOLUME_MUSICA, VOLUME_SFX, PIXEL_FONT
+from core.audio_manager import AudioManager
 from states.menu import MenuState
 from states.gameplay import GameplayState
 from states.gameover import GameOverState
@@ -8,12 +9,13 @@ from states.victory import VictoryState
 
 
 class Game:
-    def __init__(self, screen, clock, fps):
-        self.screen = screen
+    def __init__(self, screen, clock, fps, display_screen=None):
+        self.screen = screen              # surface interna (resolução lógica)
+        self.display_screen = display_screen or screen  # janela real (escalada)
         self.clock = clock
         self.fps = fps
         self.running = True
-        self.font = pygame.font.Font(None, 36)
+        self.font = pygame.font.Font(PIXEL_FONT, 14)
         
         self.current_level = 1
         self.total_levels = 6
@@ -22,6 +24,9 @@ class Game:
         self.player_hp = 5
         self.player_hp_max = 5
 
+        # Áudio
+        self.audio = AudioManager(music_volume=VOLUME_MUSICA, sfx_volume=VOLUME_SFX)
+
         self.states = {
             "MENU": MenuState(self),
             "GAMEPLAY": GameplayState(self),
@@ -29,6 +34,9 @@ class Game:
             "VICTORY": VictoryState(self),
         }
         self.current_state = self.states["MENU"]
+
+        # Inicia música do menu
+        self.audio.play_music("menu")
 
 
     def trocar_estado(self, nome_estado, **kwargs):
@@ -76,4 +84,8 @@ class Game:
             
             self.screen.fill(COR_FUNDO)
             self.current_state.draw(self.screen)
+
+            # Escala a surface interna para a janela real
+            scaled = pygame.transform.scale(self.screen, self.display_screen.get_size())
+            self.display_screen.blit(scaled, (0, 0))
             pygame.display.flip()
