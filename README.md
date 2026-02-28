@@ -2,11 +2,18 @@
 ## Lâminas das Sombras (Shadow Blades)
 
 
-**Desenvolvedores**: Moises
+**Desenvolvedores**: 
+
+[Moises Bastos](https://github.com/moisesbast0s)\
+[Hebert Vinicius](https://github.com/Hebert-Sanches)\
+[Vinicius Nobre](https://github.com/Viniciusnobre23)\
+[Luiz Vinicius Maia](https://github.com/LuizViniciusMaia)\
+[Joao Gabriel](https://github.com/gabriielcst)\
+[Adeilson Dorneles](https://github.com/Ade1lson)
 
 ---
 
-## 1. VISÃO GERAL (High Concept)
+## 1. VISÃO GERAL 
 
 **Lâminas das Sombras** é um jogo de plataforma 2D de ação onde você controla um Cavaleiro Templário preso em território hostil, enfrentando ninjas traiçoeiros para encontrar o caminho de volta para casa.
 
@@ -39,9 +46,9 @@ Sobreviver aos ataques dos ninjas, atravessar 6 fases perigosas e escapar da for
 |------|-------|-----------|
 | Mover Esquerda | A / ← | Move o cavaleiro para esquerda |
 | Mover Direita | D / → | Move o cavaleiro para direita |
-| Pular | ESPAÇO / W / ↑ | Pula (só no chão) |
+| Pular | ESPAÇO / W / ↑ | Pula |
 | Atacar | J | Golpe de espada com alcance curto |
-| Pausar | ESC | Pausa o jogo (toggle) |
+| Pausar | ESC | Pausa o jogo  |
 | Sair | Q | Fecha o jogo (funciona em qualquer tela) |
 
 ### 3.2 Ações do Personagem
@@ -67,7 +74,6 @@ Sobreviver aos ataques dos ninjas, atravessar 6 fases perigosas e escapar da for
 
 ### 3.3 Visão do Jogador
 - **Câmera lateral**: Segue o player horizontalmente
-- **Centralização**: Player sempre no centro da tela (quando possível)
 - **Limites**: Câmera não ultrapassa bordas do mapa (varia por fase: 1200px ou 1440px)
 
 ### 3.4 Sistema de Progressão
@@ -218,19 +224,8 @@ Sério mas estilizado. Combate visceral com estética cartunesca (pixel art).
 
 ## 6. ASPECTOS TÉCNICOS
 
-### 6.1 Plataforma de Publicação
-- **Primária**: PC (Windows, Linux, Mac)
-- **Futura**: Possível port para Web (HTML5 via Pygbag)
 
-### 6.2 Público-Alvo
-- **Idade**: 10+ anos (violência cartunesca, sem sangue)
-- **Perfil**: Jogadores casuais a medianos que curtem:
-  - Jogos de plataforma 2D
-  - Pixel art retrô
-  - Combate simples mas desafiador
-  - Temática medieval/oriental
-
-### 6.3 Tecnologia Utilizada
+### 6.1 Tecnologia Utilizada
 
 #### Engine e Linguagem
 - **Engine**: Pygame 2.5.2 (SDL 2.30.0)
@@ -288,13 +283,13 @@ assets/
 - ✅ Colisão horizontal com tiles (inimigos não atravessam paredes)
 - ✅ 6 fases completas com level design único
 
-### 6.4 Requisitos Técnicos
+### 6.2 Requisitos Técnicos
 
 **Mínimos:**
 - OS: Windows 7+ / Linux / macOS 10.12+
-- Processador: 1.5 GHz
+- Processador: Celeron 1.5 GHz
 - RAM: 512 MB
-- Gráficos: Qualquer placa com suporte a SDL 2.0
+- Gráficos: NVIDIA GeForce RTX 5090
 - Armazenamento: 50 MB
 
 **Dependências:**
@@ -303,24 +298,8 @@ assets/
 
 ---
 
-## 7. ESCOPO DO PROJETO
 
-### 7.1 Versão Atual
-- ✅ 6 fases jogáveis com level design único
-- ✅ 4 tipos de inimigo (patrol, chase, jumper, guard)
-- ✅ Sistema de combate com hitbox direcional
-- ✅ Sistema de HP persistente entre fases
-- ✅ Telas de menu, game over e vitória (pixel art)
-- ✅ HUD funcional com corações e indicador de fase
-- ✅ Sistema de pausa com overlay
-- ✅ Sistema de áudio (música + efeitos)
-- ✅ Escala proporcional da janela
-- ✅ Pixel font (Press Start 2P)
-- ✅ Chave coletável com animação flutuante
-
----
-
-## 8. DIFERENCIAL COMPETITIVO
+## 7. DIFERENCIAL COMPETITIVO
 
 ### O que torna "Lâminas das Sombras" único?
 
@@ -330,48 +309,22 @@ assets/
 4. **4 tipos de IA inimiga**: Cada tipo exige uma estratégia diferente de abordagem
 5. **Curva de dificuldade progressiva**: De 1 inimigo simples a 6 ninjas com múltiplos comportamentos
 
----
-
-## 9. CRONOGRAMA DE DESENVOLVIMENTO
-
-| Fase | Duração | Tarefas | Status |
-|------|---------|---------|--------|
-| **Protótipo** | 2 semanas | Movimento básico, 1 fase, colisões | ✅ Concluído |
-| **Alpha** | 3 semanas | 6 fases, inimigos, combate, animações | ✅ Concluído |
-| **Beta** | 2 semanas | Telas, HUD, polish, balanceamento | ✅ Concluído |
-| **Polish** | 1 semana | Áudio, pixel font, pausa, escala, efeitos visuais | ✅ Concluído |
-| **Release** | - | Publicação no itch.io / GitHub | ⏳ Planejado |
 
 ---
 
-## 10. EQUIPE E CRÉDITOS
+## 8. EQUIPE E CRÉDITOS
 
-**Game Designer & Programador**: Moises  
+**Game Designer & Programador**: Todo o grupo  
 **Engine**: Pygame (Python)  
 **Fonte**: Press Start 2P (Google Fonts - OFL License)  
 **Inspirações**: Hollow Knight, Dead Cells, Shovel Knight, Mark of the Ninja
 
----
 
-## 11. CONTATO E LINKS
-
-- **GitHub**: [a definir]
-- **Itch.io**: [a definir]
-- **Email**: [a definir]
-
----
-
-**Documento criado em**: 26 de dezembro de 2025  
-**Última atualização**: 27 de fevereiro de 2026  
-**Versão**: 2.0  
-**Status do Projeto**: Polish Concluído — Pronto para Release
-
----
 
 ## Notas de Desenvolvimento
 
 ### Changelog
-- **26/12/2025**: Criação do documento inicial (v1.0)
+- **26/11/2025**: Criação do documento inicial (v1.0)
 - **27/02/2026**: Atualização completa do GDD (v2.0)
   - 6 fases jogáveis completas
   - 4 tipos de inimigos implementados (patrol, chase, jumper, guard)
